@@ -6,7 +6,13 @@ class Phrase {
     constructor(phrase){
         this.phrase = phrase.toLowerCase(); //check this
     }
-    get addPhraseToDisplay() {}
-    get checkLetter() {}
-    get showMatchedLetter() {}
+    addPhraseToDisplay() {
+        this.addPhraseToDisplay = addPhraseToDisplay
+    }
+    checkLetter() {
+        this.checkLetter = checkLetter
+    }
+    showMatchedLetter() {
+        this.showMatchedLetter = showMatchedLetter
+    }
 }
