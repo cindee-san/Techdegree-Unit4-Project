@@ -16,15 +16,21 @@ class Game {
         this.activePhrase = null //think this through
     }
      startGame() {
-         this.startGame = startGame;
-     }//hides start screen overlay, calls getRandomPhrase method, sets activePhrase property and adds to board using activePhrase.addPhraseToDisplay
+         //hides start screen overlay, 
+        const startScreen = document.getElementById('overlay');
+        startScreen.style.display = 'none';
+
+        this.getRandomPhrase();
+        this.activePhrase.addPhraseToDisplay();
+     }
+     
      getRandomPhrase() {
         const randomPhrase= this.phrases[Math.floor(Math.random()*this.phrases.length)];    
         this.activePhrase = new Phrase(randomPhrase);   
         return this.activePhrase;
      }
      handleInteraction() {
-         this.handleInteraction = handleInteraction;
+         
      }
      removeLife(){
          this.removeLife = removeLife

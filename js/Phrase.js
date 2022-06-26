@@ -25,10 +25,12 @@ class Phrase {
 
         
     }
-    checkLetter() {
-        this.checkLetter = checkLetter
+    checkLetter(letter) {
+        return this.phrase.includes(letter);
     }
-    showMatchedLetter() {
-        this.showMatchedLetter = showMatchedLetter
+    showMatchedLetter(letter) {
+        document.querySelectorAll(`.hide.letter.${letter}`)
+        .forEach(matchingListItem => {
+            matchingListItem.setAttribute('class', `show`)}); 
     }
 }
