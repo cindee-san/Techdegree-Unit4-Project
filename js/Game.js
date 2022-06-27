@@ -22,6 +22,12 @@ class Game {
 
         this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
+        
+        const giveHeartLifeId= document.getElementsByTagName('img');
+            for(let i = 0; i < giveHeartLifeId.length; i++){
+                giveHeartLifeId[i].setAttribute('id', 'life');
+            }
+        
      }
      
      getRandomPhrase() {
@@ -33,13 +39,33 @@ class Game {
          
      }
      removeLife(){
-         this.removeLife = removeLife
-     }
+        const playerLife = document.querySelector('#life');
+        const lostLife = playerLife.src='images/lostHeart.png';
+        
+        function playerMiss(){
+            this.missed += 1
+        }
+        //think this
+        
+        if (this.missed === 5){
+            return this.gameOver();
+        }
+        }
+        //replaces 1 src images/liveHeart.png with images/lostHeart.png
+         //increments over missed property
+         //if this.missed = 5, call game over
      checkForWin() {
-         this.checkForWin = checkForWin
-     }
+          //grab array of show li, iterate through them looking at class, if all classes equal show, return true
+        let phraseLettersLi = document.getElementsByClassName('letter');
+
+         if (phraseLettersLi.length === 0){
+             return true;
+         } else {
+             return false;
+         }
+    }
      gameOver() {//displays original start screen overlay, updates overlay h1 with win  or loss message, replaces overlay's start css class with either win or lose css class
-         this.gameOver = gameOver  
+         
     }
 
 }
