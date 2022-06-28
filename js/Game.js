@@ -2,6 +2,8 @@
  * Project 4 - OOP Game App
  * Game.js */
 
+const startScreen = document.querySelector('#overlay');
+const gameResultMessage = document.getElementById('game-over-message');
 class Game {
     constructor(){
         this.missed = 0,
@@ -17,7 +19,6 @@ class Game {
     }
      startGame() {
          //hides start screen overlay, 
-        const startScreen = document.getElementById('overlay');
         startScreen.style.display = 'none';
 
         this.getRandomPhrase();
@@ -35,27 +36,40 @@ class Game {
         this.activePhrase = new Phrase(randomPhrase);   
         return this.activePhrase;
      }
-     handleInteraction() {
-         
+     handleInteraction(button) {
+         console.log(button);
+        button.disabled = true;
+        let pressedLetter = button.textContent;
+
+        if(this.activePhrase.phrase.includes(pressedLetter) === true){
+            console.log('im right');
+            button.classList.add('chosen');
+            this.activePhrase.showMatchedLetter(pressedLetter);
+            this.checkForWin();
+                if(this.checkForWin() === true){
+                    return this.gameOver();
+                }
+        } else{
+            console.log('im wrong');
+            button.classList.add('wrong');
+            return this.removeLife();
+        }
      }
      removeLife(){
+        this.missed += 1
+        
         const playerLife = document.querySelector('#life');
         const lostLife = playerLife.src='images/lostHeart.png';
-        
-        function playerMiss(){
-            this.missed += 1
-        }
-        //think this
+        playerLife.setAttribute('id', 'lost');
         
         if (this.missed === 5){
-            return this.gameOver();
+            startScreen.style.display = 'block';
+            startScreen.setAttribute('class', 'lose');
+            gameResultMessage.setAttribute('id', 'game-lost');
+            gameResultMessage.innerHTML = 'Better luck next time! Try again soon!';
+        } 
         }
-        }
-        //replaces 1 src images/liveHeart.png with images/lostHeart.png
-         //increments over missed property
-         //if this.missed = 5, call game over
      checkForWin() {
-          //grab array of show li, iterate through them looking at class, if all classes equal show, return true
         let phraseLettersLi = document.getElementsByClassName('letter');
 
          if (phraseLettersLi.length === 0){
@@ -64,7 +78,11 @@ class Game {
              return false;
          }
     }
-     gameOver() {//displays original start screen overlay, updates overlay h1 with win  or loss message, replaces overlay's start css class with either win or lose css class
+     gameOver() {
+        startScreen.style.display = 'block';
+        startScreen.setAttribute('class', 'win');
+        gameResultMessage.setAttribute('id', 'game-won');
+        gameResultMessage.innerHTML = 'Congrats! You won the game!';
          
     }
 
