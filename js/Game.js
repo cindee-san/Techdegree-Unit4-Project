@@ -67,16 +67,10 @@ class Game {
         const playerLife = document.querySelector('#life');
         const lostLife = playerLife.src='images/lostHeart.png';
         playerLife.setAttribute('id', 'lost');
-        
-        //if the player has 5 missed guesses, shows losing screen and resets game board
-        if (this.missed === 5){
-            startScreen.style.display = 'flex';
-            startScreen.setAttribute('class', 'lose');
-            gameResultMessage.setAttribute('id', 'game-lost');
-            gameResultMessage.innerHTML = 'Better luck next time! Try again soon!';
-            this.resetGameBoard(phraseCharacters);
-                
-        } 
+
+        if (this.missed ===5){
+            return this.gameOver(true);
+        }
      }
      
      checkForWin() {
@@ -87,11 +81,22 @@ class Game {
          }
     }
      gameOver() {
+        //if the player has 5 missed guesses, shows losing screen and resets game board
+        if (this.missed === 5){
+            startScreen.style.display = 'flex';
+            startScreen.setAttribute('class', 'lose');
+            gameResultMessage.setAttribute('id', 'game-lost');
+            gameResultMessage.innerHTML = 'Better luck next time! Try again soon!';
+            this.resetGameBoard(phraseCharacters);      
+
+        } else{  
         startScreen.style.display = 'flex';
         startScreen.setAttribute('class', 'win');
         gameResultMessage.setAttribute('id', 'game-won');
         gameResultMessage.innerHTML = 'Congrats! You won the game!';
         this.resetGameBoard(phraseCharacters);
+        }
+
     }
 
     resetGameBoard(phraseCharacters){
