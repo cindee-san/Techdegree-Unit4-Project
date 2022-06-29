@@ -9,39 +9,18 @@ const phraseCharacters = document.getElementById('phrase').firstElementChild;
 const phraseLettersLi = document.getElementsByClassName('letter');
 const playerHearts = document.getElementsByClassName('tries');
 const startScreen = document.querySelector('#overlay');
-
-function resetGameBoard(phraseCharacters){
-    //clears the ul containing phrase characters
-    while (phraseCharacters.firstElementChild){
-        phraseCharacters.removeChild(phraseCharacters.firstElementChild);
-    }
-    //resets each key
-    Array.from(keys).forEach((key) => {
-        if(key.className === 'chosen' || 'wrong'){
-            key.classList.remove('chosen');
-            key.classList.remove('wrong');
-            key.disabled = false;
-        }
-    });
-
-    //resets each heart
-    Array.from(playerHearts).forEach((heart) =>{
-        if(heart.innerHTML === '<img src="images/lostHeart.png" alt="Heart Icon" height="35" width="30" id="lost">'){
-            heart.innerHTML = '<img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30">'
-        }
-    })  
-}
 class Game {
     constructor(){
         this.missed = 0,
-        this.phrases = [ {phrase: 'Batman And Robin'},
-            {phrase:'Crystal Gems'},
-            {phrase:'Scooby Doo Where Are You'},
-            {phrase:'You will not break my soul'},
-            {phrase:'Beetlejuice'},
-            {phrase:'Butterflies in the sky'} ,
-            {phrase:'Avengers Assemble'},
-            {phrase:'Peanut Butter Jelly Time'}],
+        this.phrases = [ 
+            new Phrase('Batman And Robin'),
+            new Phrase('Crystal Gems'),
+            new Phrase('Scooby Doo Where Are You'),
+            new Phrase('You will not break my soul'),
+            new Phrase ('Beetlejuice'),
+            new Phrase ('Butterflies in the sky'),
+            new Phrase ('Avengers Assemble'),
+            new Phrase ('Peanut Butter Jelly Time')],
         this.activePhrase = null 
     }
      startGame() {
@@ -58,8 +37,7 @@ class Game {
      
      getRandomPhrase() {
         const randomPhrase= this.phrases[Math.floor(Math.random()*this.phrases.length)];    
-        this.activePhrase = new Phrase(randomPhrase);   
-        return this.activePhrase;
+        this.activePhrase = randomPhrase;   
      }
 
      handleInteraction(button) {
@@ -92,11 +70,11 @@ class Game {
         
         //if the player has 5 missed guesses, shows losing screen and resets game board
         if (this.missed === 5){
-            startScreen.style.display = 'block';
+            startScreen.style.display = 'flex';
             startScreen.setAttribute('class', 'lose');
             gameResultMessage.setAttribute('id', 'game-lost');
             gameResultMessage.innerHTML = 'Better luck next time! Try again soon!';
-            resetGameBoard(phraseCharacters);
+            this.resetGameBoard(phraseCharacters);
                 
         } 
      }
@@ -109,11 +87,32 @@ class Game {
          }
     }
      gameOver() {
-        startScreen.style.display = 'block';
+        startScreen.style.display = 'flex';
         startScreen.setAttribute('class', 'win');
         gameResultMessage.setAttribute('id', 'game-won');
         gameResultMessage.innerHTML = 'Congrats! You won the game!';
-        resetGameBoard(phraseCharacters);
+        this.resetGameBoard(phraseCharacters);
     }
 
+    resetGameBoard(phraseCharacters){
+        //clears the ul containing phrase characters
+        while (phraseCharacters.firstElementChild){
+            phraseCharacters.removeChild(phraseCharacters.firstElementChild);
+        }
+        //resets each key
+        Array.from(keys).forEach((key) => {
+            if(key.className === 'chosen' || 'wrong'){
+                key.classList.remove('chosen');
+                key.classList.remove('wrong');
+                key.disabled = false;
+            }
+        });
+    
+        //resets each heart
+        Array.from(playerHearts).forEach((heart) =>{
+            if(heart.innerHTML === '<img src="images/lostHeart.png" alt="Heart Icon" height="35" width="30" id="lost">'){
+                heart.innerHTML = '<img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30">'
+            }
+        })  
+    }
 }

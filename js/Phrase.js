@@ -5,7 +5,7 @@
 //controls what happens with the phrase in the game
 class Phrase {
     constructor(phrase){
-        this.phrase = phrase.phrase.toLowerCase(); 
+        this.phrase = phrase.toLowerCase(); 
     }
     addPhraseToDisplay() {
         const phraseDiv = document.getElementById('phrase');
