@@ -2,25 +2,26 @@
  * Project 4 - OOP Game App
  * Phrase.js */
 
+//controls what happens with the phrase in the game
 class Phrase {
     constructor(phrase){
-        this.phrase = phrase.phrase.toLowerCase(); //check this
+        this.phrase = phrase.phrase.toLowerCase(); 
     }
     addPhraseToDisplay() {
         const phraseDiv = document.getElementById('phrase');
         
         const activePhraseArray = this.phrase.split('')
         activePhraseArray.forEach(letter => { 
-            let eachCharacter = document.createElement('li');
+            let character = document.createElement('li');
                 if(letter === ' '){
-                    eachCharacter.setAttribute('class', 'space');
-                    eachCharacter.textContent = (' ');
+                    character.setAttribute('class', 'space');
+                    character.textContent = (' ');
                     
                 } else {
-                    eachCharacter.setAttribute('class', `hide letter ${letter}`)
-                    eachCharacter.textContent =(`${letter}`);
+                    character.setAttribute('class', `hide letter ${letter}`)
+                    character.textContent =(`${letter}`);
                 }    
-            phraseDiv.firstElementChild.appendChild(eachCharacter);  
+            phraseDiv.firstElementChild.appendChild(character);  
         });    
 
         
@@ -30,7 +31,7 @@ class Phrase {
     }
     showMatchedLetter(letter) {
         document.querySelectorAll(`.hide.letter.${letter}`)
-        .forEach(matchingListItem => {
-            matchingListItem.setAttribute('class', `show`)}); 
+        .forEach(matchingLetter => {
+            matchingLetter.setAttribute('class', `show`)}); 
     }
 }
